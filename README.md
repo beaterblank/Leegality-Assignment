@@ -1,5 +1,7 @@
 # Leegality-Assignment
-Assignment Submission for leegality
+
+Check out.txt to check out test case outputs
+
 
 The parking class provides a basic implementation of a parking lot management system. It allows cars to be parked and unparked, floors and parking spaces to be added or removed, and the status of the parking lot to be displayed. Additional functionality such as tracking the availability of parking spaces, implementing different parking policies, or integrating with a database can be added based on specific requirements.
 
