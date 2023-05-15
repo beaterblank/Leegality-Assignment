@@ -143,6 +143,10 @@ if __name__ == '__main__':
     print("parking car1 and car2\n")
     print(p)
 
+
+    print("getting car1 location\n")
+    print(p.get_car("car1"))
+
     p.unpark("car1")
     print("unparking car1\n")
     print(p)
