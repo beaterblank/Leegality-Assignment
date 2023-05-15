@@ -30,6 +30,14 @@ class parking:
                     return parking_name  # Return the parking space name
         return None  # Return None if the car is not found
 
+    def get_car(self, car_id:str)->Optional[str]:
+        # Method to get a location car from the parking lot
+        for floor_name in self.parkinglot:
+            for parking_name in self.parkinglot[floor_name]:
+                if self.parkinglot[floor_name][parking_name]['occupied'] == car_id:
+                    return {'level':floor_name,'spot':parking_name}  # Return the parking space name
+        return None  # Return None if the car is not found
+
     def add_floors(self, n_floors:int, p_floor:int)->None:
         # Method to add floors to the parking lot
         for i in range(self.n_floors + 1, self.n_floors + n_floors + 1):
