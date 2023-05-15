@@ -9,70 +9,63 @@ class  parking:
         self.in_floor = 1
         self.add_floors(n_floors,p_floor)
 
-
-
-    def brute_park(self,car_id):
+    def park(self,car_id):
         for floor_name in self.parkinglot:
             for parking_name in self.parkinglot[floor_name]:
                 try:
                     self._park(floor_name,parking_name,car_id)
-                    return True
+                    return parking_name
                 except:
                     pass
-        return False
+        return None
     
-    def brute_unpark(self,car_id):
+    def unpark(self,car_id):
         for floor_name in self.parkinglot:
             for parking_name in self.parkinglot[floor_name]:
                 if self.parkinglot[floor_name][parking_name]['occupied'] == car_id:
                     self._unpark(floor_name,parking_name)
-                    return True
-        return False
+                    return parking_name
+        return None
     
+
     
-
-
-
     def add_floors(self,n_floors,p_floor):
-        self._reset_floors(self.n_floors,self.p_floor)
-        for i in range(self.n_floors+1,self.n_floors+n_floors):
-            floor_name = self._number_to_floor(i)
+        for i in range(self.n_floors+1,self.n_floors+n_floors+1):
+            floor_name = self.number_to_floor(i)
+            self.parkinglot[floor_name]={}
             for j in range(p_floor):
-                self.parkinglot[floor_name][floor_name+str(j)] = {
+                self.parkinglot[floor_name][floor_name+str(j+1)] = {
                     'occupied':None,
                     'working':True
                 } 
         self.n_floors += n_floors
     
-    def remove_floors(self,n_floors):
-        self._reset_floors(self.n_floors,self.p_floor)
-        for i in range(self.n_floors-n_floors,self.n_floors):
-            floor_name = self._number_to_floor(i)
-            del self.parkinglot[floor_name]
-        self.n_floors -= n_floors
+    def remove_floor(self,n_floor):
+        floor_name = self.number_to_floor(n_floor)
+        del self.parkinglot[floor_name]
+        self.n_floors -= 1
     
 
     def add_parking(self,floor_name,n_parking):
-        self._reset_floors(self.n_floors,self.p_floor)
         n = len(self.parkinglot[floor_name])
         for j in range(n+1,n+n_parking):
-            self.parkinglot[floor_name][floor_name+str(j)] = {
+            self.parkinglot[floor_name][floor_name+str(j+1)] = {
                 'occupied':None,
                 'working':True
             }
     
     def remove_parking(self,floor_name,n_parking):
-        self._reset_floors(self.n_floors,self.p_floor)
         n = len(self.parkinglot[floor_name])
         for j in range(n-n_parking,n):
-            del self.parkinglot[floor_name][floor_name+str(j)]
+            del self.parkinglot[floor_name][floor_name+str(j+1)]
 
     def _reset_floors(self):
         for i in range(self.n_floors):
-            floor_name = self._number_to_floor(i)
+            floor_name = self.number_to_floor(i)
             self.parkinglot[floor_name] = {}
+            self.parkinglot[floor_name]={}
             for j in range(self.p_floor):
-                self.parkinglot[floor_name][floor_name+str(j)] = {
+                self.parkinglot[floor_name][floor_name+str(j+1)] = {
                     'occupied':None,
                     'working':True
                 }
@@ -93,17 +86,17 @@ class  parking:
             raise ValueError('Parking space is not occupied')
         self.parkinglot[floor_name][parking_name]['occupied'] = None
 
-    def _repair(self,floor_name,parking_name):
+    def repair(self,floor_name,parking_name):
         if self.parkinglot[floor_name][parking_name]['occupied']:
             raise ValueError('Parking space is occupied')
         self.parkinglot[floor_name][parking_name]['working'] = True
     
-    def _damage(self,floor_name,parking_name):
+    def damage(self,floor_name,parking_name):
         if self.parkinglot[floor_name][parking_name]['occupied']:
             raise ValueError('Parking space is occupied')
         self.parkinglot[floor_name][parking_name]['working'] = False
 
-    def _number_to_floor(number):
+    def number_to_floor(self,number):
         column_name = ''
         while number > 0:
             remainder = (number - 1) % 26
@@ -111,3 +104,11 @@ class  parking:
             number = (number - 1) // 26
         return column_name
     
+    def __str__(self) -> str:
+        out = ""
+        for floor_name in self.parkinglot:
+            out += floor_name + "\n"
+            for parking_name in self.parkinglot[floor_name]:
+                out += parking_name + ": " + str(self.parkinglot[floor_name][parking_name]['occupied']) + "\n"  
+            out += "\n"  
+        return out
