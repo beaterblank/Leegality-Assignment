@@ -132,14 +132,28 @@ if __name__ == '__main__':
 
     p.park("car1")
     p.park("car2")
-
     print("parking car1 and car2\n")
-
     print(p)
 
     p.unpark("car1")
     print("unparking car1\n")
     print(p)
+
     print("adding 2 floors and 4 parking spaces per floor in them\n")
     p.add_floors(2,4)
+    print(p)
+
+    p.park("car3")
+    p.park("car4")
+    p.park("car1")
+    print("parking car3, car4 and car1\n")
+    print(p)
+
+
+    p.remove_floor(3)
+    print("removing floor C\n")
+    print(p)
+
+    p.remove_parking("A", 2)
+    print("removing 2 parking spaces from floor A\n")
     print(p)
